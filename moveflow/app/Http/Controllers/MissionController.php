@@ -1,7 +1,5 @@
 <?php
 
-// php artisan make:controller MissionController --resource
-// app/Http/Controllers/MissionController.php (excerpt)
 
 namespace App\Http\Controllers;
 use App\Models\Mission;
