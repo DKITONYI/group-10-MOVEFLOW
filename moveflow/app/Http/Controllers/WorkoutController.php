@@ -6,8 +6,6 @@ use Illuminate\Http\Request;
 
 class WorkoutController extends Controller
 {
-    public function __construct(){ $this->middleware('auth'); }
-
     public function index()
     {
         $workouts = \App\Models\Workout::latest()->paginate(12);
