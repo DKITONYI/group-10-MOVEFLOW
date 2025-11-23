@@ -15,6 +15,6 @@ class LeaderboardController extends Controller
         // Top 10 teams by points
         $topTeams = Team::orderByDesc('points')->take(10)->get();
 
-        return view('leaderboard', compact('topUsers', 'topTeams'));
+        return view('leaderboard.index', compact('topUsers', 'topTeams'));
     }
 }

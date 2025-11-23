@@ -8,8 +8,6 @@ use Illuminate\Support\Facades\Auth;
 
 class MissionController extends Controller
 {
-    public function __construct(){ $this->middleware('auth'); }
-
     public function index()
     {
         $missions = Mission::with('workout')->latest()->paginate(12);

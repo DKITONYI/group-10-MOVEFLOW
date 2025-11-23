@@ -5,57 +5,56 @@ use App\Http\Controllers\MissionController;
 use App\Http\Controllers\WorkoutController;
 use App\Http\Controllers\TeamController;
 use App\Http\Controllers\ChapterController;
+use App\Http\Controllers\LeaderboardController;
 
 /*
 |--------------------------------------------------------------------------
 | Web Routes
 |--------------------------------------------------------------------------
-|
-| Here is where you register all web routes for your application.
-| Routes inside the 'auth' middleware require login.
-| Routes inside the 'role:admin' middleware require admin privilege.
-|
 */
 
+// -------------------------------------
+// Landing Page
+// -------------------------------------
 Route::get('/', function () {
     return view('welcome');
-});
+})->name('home');
 
-// ===========================================================
-// AUTHENTICATED USER ROUTES
-// ===========================================================
+// -------------------------------------
+// Public Auth Routes (Breeze)
+// -------------------------------------
+require __DIR__.'/auth.php';
+
+// -------------------------------------
+// Protected Routes (logged-in users)
+// -------------------------------------
 Route::middleware(['auth'])->group(function () {
 
-    // Missions
+    Route::get('/dashboard', function () {
+        return redirect()->route('missions.index');
+    })->name('dashboard');
+
     Route::resource('missions', MissionController::class);
-
-    // Mission completion (gamified feature)
-    Route::post('missions/{mission}/complete', 
-        [MissionController::class, 'complete']
-    )->name('missions.complete');
-
-    // Workouts (only index + show for normal users)
-    Route::resource('workouts', WorkoutController::class)
-        ->only(['index', 'show']);
-
-    // Teams
+    Route::resource('workouts', WorkoutController::class)->only(['index', 'show']);
     Route::resource('teams', TeamController::class);
-
-    // Storyline Chapters
     Route::resource('chapters', ChapterController::class);
+
+    // Mission completion
+    Route::post('missions/{mission}/complete', [MissionController::class, 'complete'])
+        ->name('missions.complete');
+
+    // Leaderboard
+    Route::get('/leaderboard', [LeaderboardController::class, 'index'])
+        ->name('leaderboard');
 });
 
-// ===========================================================
-// ADMIN-ONLY ROUTES
-// ===========================================================
+// -------------------------------------
+// Admin Routes
+// -------------------------------------
 Route::middleware(['auth', 'role:admin'])->group(function () {
-
-    // Only admin can create/update/delete workouts
-    Route::resource('workouts', WorkoutController::class)
-        ->except(['index', 'show']);
-    Route::get('/leaderboard', [\App\Http\Controllers\LeaderboardController::class, 'index'])
-    ->name('leaderboard');
-
+    Route::resource('workouts', WorkoutController::class)->except(['index', 'show']);
 });
 
-require __DIR__.'/auth.php';
+Route::post('/teams/{team}/add-user', [TeamController::class, 'addUser'])->name('teams.addUser');
+
+Route::post('/chapters/{chapter}/unlock', [ChapterController::class, 'unlock'])->name('chapters.unlock');
