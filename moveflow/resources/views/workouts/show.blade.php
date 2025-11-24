@@ -1,12 +1,33 @@
 @extends('layouts.app')
 
 @section('content')
-<div class="container mx-auto p-4">
-    <h1 class="text-2xl font-bold mb-4">Workout: {{ $workout->title }}</h1>
-    <div class="mb-2">Duration: {{ $workout->duration }} min</div>
-    <div class="mb-2">Difficulty: {{ ucfirst($workout->difficulty) }}</div>
-    <div class="mb-2">Description: {{ $workout->description }}</div>
-    <div class="mb-2">Equipment: {{ is_array($workout->equipment) ? implode(', ', $workout->equipment) : $workout->equipment }}</div>
-    <a href="{{ route('workouts.index') }}" class="mt-4 inline-block px-4 py-2 bg-blue-500 text-white rounded">Back to Workouts</a>
+
+<div class="max-w-3xl mx-auto p-4">
+
+    <h1 class="text-3xl font-bold mb-4">{{ $workout->title }}</h1>
+
+    <p class="text-gray-700 mb-4">{{ $workout->description }}</p>
+
+    <h2 class="text-xl font-semibold mb-2">Exercises</h2>
+
+    @forelse ($workout->exercises as $exercise)
+        <div class="p-3 border rounded-lg mb-3 bg-white">
+            <h3 class="text-lg font-semibold">{{ $exercise->name }}</h3>
+
+            <p class="text-sm text-gray-600">
+                <strong>Duration:</strong> {{ $exercise->duration }}
+            </p>
+
+            @if($exercise->instructions)
+                <p class="text-sm text-gray-700 mt-1">
+                    {{ $exercise->instructions }}
+                </p>
+            @endif
+        </div>
+    @empty
+        <p>No exercises added to this workout yet.</p>
+    @endforelse
+
 </div>
+
 @endsection

@@ -11,7 +11,7 @@
                 <a class="px-3 py-1 bg-blue-500 text-white rounded" href="{{ route('teams.show',$t) }}">View</a>
                 <form method="POST" action="{{ route('teams.addUser',$t) }}">
                     @csrf
-                    <input type="number" name="user_id" placeholder="User ID" class="px-2 py-1 border rounded">
+                    <input type="text" name="user_name" placeholder="User Name" class="px-2 py-1 border rounded">
                     <button class="px-3 py-1 bg-green-500 text-white rounded">Add User</button>
                 </form>
             </div>

@@ -82,6 +82,6 @@ class MissionController extends Controller
             }
         }
 
-        return back()->with('success','Mission completed! Points awarded.');
+    return redirect()->route('leaderboard.index')->with('success','Mission completed! Points awarded.');
     }
 }

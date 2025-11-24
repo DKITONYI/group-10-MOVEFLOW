@@ -50,10 +50,15 @@ class TeamController extends Controller
     // add user to team
     public function addUser(Request $request, Team $team)
     {
-        $userId = $request->input('user_id');
-        if(!$team->users()->where('user_id',$userId)->exists()){
-            $team->users()->attach($userId);
+        $userName = $request->input('user_name');
+        $user = \App\Models\User::where('name', $userName)->first();
+        if(!$user){
+            return back()->with('error','User not found.');
         }
-        return back()->with('success','User added to team.');
+        if(!$team->users()->where('user_id',$user->id)->exists()){
+            $team->users()->attach($user->id);
+            return back()->with('success','User added to team.');
+        }
+        return back()->with('info','User is already in the team.');
     }
 }

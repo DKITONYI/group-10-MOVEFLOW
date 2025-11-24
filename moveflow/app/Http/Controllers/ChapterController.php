@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Chapter;
 
 class ChapterController extends Controller
 {
@@ -25,7 +26,6 @@ class ChapterController extends Controller
         return redirect()->route('chapters.index')->with('success','Chapter created');
     }
 
-    public function show(\App\Models\Chapter $chapter){ return view('chapters.show',compact('chapter')); }
 
     public function edit(\App\Models\Chapter $chapter){ return view('chapters.edit',compact('chapter')); }
 
@@ -59,4 +59,17 @@ class ChapterController extends Controller
         }
         return back()->with('error','Not enough points to unlock this chapter.');
     }
+
+    public function show(Chapter $chapter)
+    {
+        $user = auth()->user();
+
+        if (! $chapter->isUnlockedFor($user)) {
+            return redirect()->route('chapters.index')
+                ->with('error', 'This chapter is locked. Earn more points to unlock it!');
+        }
+
+        return view('chapters.show', compact('chapter'));
+    }
+
 }

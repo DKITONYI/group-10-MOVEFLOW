@@ -3,6 +3,7 @@
 namespace App\Http\Controllers;
 
 use Illuminate\Http\Request;
+use App\Models\Workout;
 
 class WorkoutController extends Controller
 {
@@ -28,7 +29,12 @@ class WorkoutController extends Controller
         return redirect()->route('workouts.index')->with('success','Workout created');
     }
 
-    public function show(\App\Models\Workout $workout){ return view('workouts.show',compact('workout')); }
+    public function show(Workout $workout)
+    {
+        $workout->load('exercises');
+
+        return view('workouts.show', compact('workout'));
+    }
 
     public function edit(\App\Models\Workout $workout){ return view('workouts.edit',compact('workout')); }
 
