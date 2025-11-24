@@ -5,11 +5,11 @@ use Illuminate\Database\Migrations\Migration;
 use Illuminate\Database\Schema\Blueprint;
 use Illuminate\Support\Facades\Schema;
 
-class CreateUserMissionTable extends Migration
+class CreateMissionUserTable extends Migration
 {
     public function up()
     {
-        Schema::create('user_mission', function (Blueprint $table) {
+    Schema::create('mission_user', function (Blueprint $table) {
             $table->id();
             $table->foreignId('mission_id')->constrained()->cascadeOnDelete();
             $table->foreignId('user_id')->constrained()->cascadeOnDelete();
@@ -18,5 +18,5 @@ class CreateUserMissionTable extends Migration
             $table->timestamps();
         });
     }
-    public function down(){ Schema::dropIfExists('user_mission'); }
+    public function down(){ Schema::dropIfExists('mission_user'); }
 }

@@ -10,4 +10,8 @@ class Chapter extends Model
     use HasFactory;
     protected $fillable = ['title','content','unlock_points'];
     public function users(){ return $this->belongsToMany(User::class)->withTimestamps(); }
+    public function isUnlockedFor($user)
+    {
+        return $user->points >= $this->unlock_points;
+    }
 }

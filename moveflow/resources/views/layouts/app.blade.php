@@ -46,7 +46,7 @@
                             Chapters
                         </a>
 
-                        <a href="{{ route('leaderboard') }}"
+                        <a href="{{ route('leaderboard.index') }}"
                            class="text-gray-700 hover:text-black px-3 py-2">
                             Leaderboard
                         </a>
@@ -119,7 +119,7 @@
                 <a href="{{ route('workouts.index') }}" class="block px-4 py-2 text-gray-700">Workouts</a>
                 <a href="{{ route('teams.index') }}" class="block px-4 py-2 text-gray-700">Teams</a>
                 <a href="{{ route('chapters.index') }}" class="block px-4 py-2 text-gray-700">Chapters</a>
-                <a href="{{ route('leaderboard') }}" class="block px-4 py-2 text-gray-700">Leaderboard</a>
+                <a href="{{ route('leaderboard.index') }}" class="block px-4 py-2 text-gray-700">Leaderboard</a>
 
             </div>
 

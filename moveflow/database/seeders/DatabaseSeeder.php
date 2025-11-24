@@ -15,6 +15,7 @@ class DatabaseSeeder extends Seeder
             TeamSeeder::class,
             UserSeeder::class,
             AchievementSeeder::class,
+            ExerciseSeeder::class,
         ]);
     }
 }
